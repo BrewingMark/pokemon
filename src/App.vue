@@ -1,28 +1,32 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="html">
+  <div>
+    <h1>browse cards</h1>
+    <cards-list :cards="cards"></cards-list>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import CardsList from './components/CardsList.vue';
 
 export default {
-  name: 'App',
+  name: 'app',
+  data() {
+    return {
+      pokedex: [],
+      cards: []
+    }
+  },
+  mounted(){
+    fetch('https://api.pokemontcg.io/v1/cards')
+    .then(result => result.json())
+    .then(cards => this.cards = cards)
+  },
   components: {
-    HelloWorld
+    "cards-list": CardsList,
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="css" scoped>
 </style>
